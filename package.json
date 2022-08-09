@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "mongoose": "^6.5.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.21.0",
+    "eslint-plugin-react": "^7.30.1"
+  },
+  "name": "express-mesto",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint ."
+  },
+  "author": "KolganovAM",
+  "license": "ISC",
+  "description": ""
+}
