@@ -29,3 +29,6 @@ yarn-error.log*
 logs
 *.log
 npm-debug.log*
+
+# Optional npm cache directory
+.npm
