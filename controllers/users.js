@@ -42,7 +42,7 @@ module.exports.updateUserInfo = (req, res, next) => {
     .orFail(() => {
       next(new NotFoundError('Пользователь не найден или был запрошен несуществующий роут'));
     })
-    .then((user) => res.status(201).send({ data: user }))
+    .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные в метод обновления информации о пользователе'));
@@ -58,7 +58,7 @@ module.exports.updateUserAvatar = (req, res, next) => {
     .orFail(() => {
       next(new NotFoundError('Пользователь не найден или был запрошен несуществующий роут'));
     })
-    .then((user) => res.status(201).send({ data: user }))
+    .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные в метод обновления аватара пользователя'));

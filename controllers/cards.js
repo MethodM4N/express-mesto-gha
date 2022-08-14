@@ -29,7 +29,7 @@ module.exports.deleteCardById = (req, res, next) => {
     })
     .then((card) => {
       Card.deleteOne({ _id: card._id })
-        .then(res.status(201).send({ message: 'Карточка удалена' }));
+        .then(res.status(200).send({ message: 'Карточка удалена' }));
     })
     .catch((err) => {
       if (err.name === 'CastError') {
