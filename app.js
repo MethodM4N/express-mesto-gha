@@ -22,8 +22,8 @@ app.use('/', userRouter);
 app.use('/', cardRouter);
 
 app.use((req, res, next) => {
-   next(new NotFoundError('Обработка неправильного пути'));
- });
+  next(new NotFoundError('Обработка неправильного пути'));
+});
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
