@@ -4,7 +4,7 @@
 ```JS
 - JavaScript
 - ES2015;
-```Node
+```
 - Node.js (express.js)
 ```
  #### (Проектная работа №13)

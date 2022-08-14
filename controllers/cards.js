@@ -1,6 +1,5 @@
 const Card = require('../models/card');
 
-const AplicationError = require('../errors/500error');
 const BadRequestError = require('../errors/400error');
 const NotFoundError = require('../errors/404error');
 
@@ -18,7 +17,7 @@ module.exports.createCard = (req, res, next) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError());
       } else {
-        next(new AplicationError());
+        next(err);
       }
     });
 };
@@ -36,7 +35,7 @@ module.exports.deleteCardById = (req, res, next) => {
       if (err.name === 'CastError') {
         next(new BadRequestError());
       } else {
-        next(new AplicationError());
+        next(err);
       }
     });
 };
@@ -57,7 +56,7 @@ module.exports.likeCard = (req, res, next) => {
       if (err.name === 'CastError') {
         next(new BadRequestError());
       } else {
-        next(new AplicationError());
+        next(err);
       }
     });
 };
@@ -78,7 +77,7 @@ module.exports.dislikeCard = (req, res, next) => {
       if (err.name === 'CastError') {
         next(new BadRequestError());
       } else {
-        next(new AplicationError());
+        next(err);
       }
     });
 };

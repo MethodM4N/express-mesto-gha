@@ -1,8 +1,7 @@
-const AplicationError = require('./500error');
-
-class NotFoundError extends AplicationError {
-  constructor() {
-    super(404, '404 — карточка или пользователь не найден');
+class NotFoundError extends Error {
+  constructor(message) {
+    super(message);
+    this.statusCode = 404;
   }
 }
 
