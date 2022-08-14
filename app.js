@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const { PORT = 3000 } = process.env;
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
+const NotFoundError = require('./errors/404error');
 
 const app = express();
 
@@ -19,6 +20,10 @@ app.use((req, res, next) => {
 });
 app.use('/', userRouter);
 app.use('/', cardRouter);
+
+app.use((req, res, next) => {
+   next(new NotFoundError('Обработка неправильного пути'));
+ });
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
