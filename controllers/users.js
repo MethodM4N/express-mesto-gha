@@ -3,13 +3,13 @@ const User = require('../models/user');
 const BadRequestError = require('../errors/400error');
 const NotFoundError = require('../errors/404error');
 
-module.exports.findUsers = (req, res, next) => {
+const findUsers = (req, res, next) => {
   User.find({})
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => next(err));
 };
 
-module.exports.findUserById = (req, res, next) => {
+const findUserById = (req, res, next) => {
   const { userId } = req.params;
   User.findById(userId)
     .orFail(() => (new NotFoundError('Пользователь не найден или был запрошен несуществующий роут')))
@@ -23,7 +23,7 @@ module.exports.findUserById = (req, res, next) => {
     });
 };
 
-module.exports.createUser = (req, res, next) => {
+const createUser = (req, res, next) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
     .then((user) => res.status(201).send({ data: user }))
@@ -36,7 +36,7 @@ module.exports.createUser = (req, res, next) => {
     });
 };
 
-module.exports.updateUserInfo = (req, res, next) => {
+const updateUserInfo = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .orFail(() => {
@@ -52,7 +52,7 @@ module.exports.updateUserInfo = (req, res, next) => {
     });
 };
 
-module.exports.updateUserAvatar = (req, res, next) => {
+const updateUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .orFail(() => {
@@ -66,4 +66,8 @@ module.exports.updateUserAvatar = (req, res, next) => {
         next(err);
       }
     });
+};
+
+module.exports = {
+  findUsers, findUserById, createUser, updateUserInfo, updateUserAvatar,
 };

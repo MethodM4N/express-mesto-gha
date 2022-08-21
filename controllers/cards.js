@@ -3,13 +3,13 @@ const Card = require('../models/card');
 const BadRequestError = require('../errors/400error');
 const NotFoundError = require('../errors/404error');
 
-module.exports.findCards = (req, res, next) => {
+const findCards = (req, res, next) => {
   Card.find({})
     .then((user) => res.status(200).send({ data: user }))
     .catch((err) => next(err));
 };
 
-module.exports.createCard = (req, res, next) => {
+const createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.status(201).send({ data: card }))
@@ -22,7 +22,7 @@ module.exports.createCard = (req, res, next) => {
     });
 };
 
-module.exports.deleteCardById = (req, res, next) => {
+const deleteCardById = (req, res, next) => {
   Card.findById(req.params.cardId)
     .orFail(() => {
       next(new NotFoundError('Карточка не найдена или был запрошен несуществующий роут'));
@@ -40,7 +40,7 @@ module.exports.deleteCardById = (req, res, next) => {
     });
 };
 
-module.exports.likeCard = (req, res, next) => {
+const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
@@ -61,7 +61,7 @@ module.exports.likeCard = (req, res, next) => {
     });
 };
 
-module.exports.dislikeCard = (req, res, next) => {
+const dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
@@ -80,4 +80,8 @@ module.exports.dislikeCard = (req, res, next) => {
         next(err);
       }
     });
+};
+
+module.exports = {
+  findCards, createCard, deleteCardById, likeCard, dislikeCard,
 };
