@@ -69,11 +69,10 @@ const login = (req, res, next) => {
             'secret-af-key',
             { expiresIn: '7d' },
           );
-          res.send({ token });
+          res.status(200).send({ token });
         })
         .catch((err) => next(err));
     })
-    .catch((err) => next(err));
 };
 
 const updateUserInfo = (req, res, next) => {
