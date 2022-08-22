@@ -72,7 +72,8 @@ const login = (req, res, next) => {
           res.send({ token });
         })
         .catch((err) => next(err));
-    });
+    })
+    .catch((err) => next(err));
 };
 
 const updateUserInfo = (req, res, next) => {
