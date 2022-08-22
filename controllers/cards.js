@@ -2,6 +2,7 @@ const Card = require('../models/card');
 
 const BadRequestError = require('../errors/400error');
 const NotFoundError = require('../errors/404error');
+const ForbiddenError = require('../errors/403error');
 
 const findCards = (req, res, next) => {
   Card.find({})
@@ -28,8 +29,12 @@ const deleteCardById = (req, res, next) => {
       next(new NotFoundError('Карточка не найдена или был запрошен несуществующий роут'));
     })
     .then((card) => {
-      Card.deleteOne({ _id: card._id })
-        .then(res.status(200).send({ message: 'Карточка удалена' }));
+      if (card.owner.toString() === req.user._id) {
+        Card.deleteOne({ _id: card._id })
+          .then(res.status(200).send({ message: 'Карточка удалена' }));
+      } else {
+        next(new ForbiddenError('Отсутствуют права доступа на удаление чужих карточек'));
+      }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
