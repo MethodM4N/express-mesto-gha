@@ -42,7 +42,7 @@ const createUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError('Переданы некорректные данные в метод создания пользователя'));
       }
-      if (err.name === 'MongoServerError') {
+      if (err.code === 11000) {
         next(new ConflictError('Пользователь с таким e-mail уже существует'));
       } else {
         next(err);
@@ -72,7 +72,8 @@ const login = (req, res, next) => {
           res.status(200).send({ token });
         })
         .catch((err) => next(err));
-    });
+    })
+    .catch((err) => next(err));
 };
 
 const updateUserInfo = (req, res, next) => {

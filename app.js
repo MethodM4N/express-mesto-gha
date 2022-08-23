@@ -7,6 +7,7 @@ const { PORT = 3000 } = process.env;
 const {
   login, createUser,
 } = require('./controllers/users');
+const { validateUrl } = require('./urlValidation/validateurl');
 const auth = require('./middlewares/auth');
 const userRouter = require('./routes/users');
 const cardRouter = require('./routes/cards');
@@ -25,8 +26,7 @@ app.post('/signin', celebrate({
         .required()
         .email(),
       password: Joi.string()
-        .required()
-        .min(4),
+        .required(),
     }),
 }), login);
 
@@ -37,14 +37,15 @@ app.post('/signup', celebrate({
         .required()
         .email(),
       password: Joi.string()
-        .required()
-        .min(4),
+        .required(),
       name: Joi.string()
         .min(2)
         .max(30),
       about: Joi.string()
         .min(2)
         .max(30),
+      avatar: Joi.string()
+        .custom(validateUrl),
     }),
 }), createUser);
 

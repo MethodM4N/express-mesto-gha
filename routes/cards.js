@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 
+const { validateUrl } = require('../urlValidation/validateurl');
 const {
   findCards, deleteCardById, createCard, likeCard, dislikeCard,
 } = require('../controllers/cards');
@@ -15,7 +16,7 @@ router.post('/cards', celebrate({
         .min(2)
         .max(30),
       link: Joi.string()
-        .required(),
+        .custom(validateUrl),
     }),
 }), createCard);
 
